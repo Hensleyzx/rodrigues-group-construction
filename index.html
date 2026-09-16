@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Rodrigues Group Construction — imóveis, construção de alto padrão e simulador de custos de obra." />
+  <meta name="description" content="Rodrigues Group Construction — imóveis, construção residencial, gestão de obra e soluções de alto padrão." />
   <title>Rodrigues Group Construction</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -21,9 +21,7 @@
       <nav class="main-nav" aria-label="Navegação principal">
         <a href="#empreendimentos">Imóveis</a>
         <a href="#servicos">Serviços</a>
-        <a href="#calculadora">Calculadora</a>
         <a href="#sobre">Sobre</a>
-        <a class="nav-cta" href="#contato">Solicitar orçamento</a>
       </nav>
     </div>
   </header>
@@ -35,10 +33,10 @@
         <div class="hero-copy">
           <span class="eyebrow">CONSTRUÇÃO • ENGENHARIA • IMÓVEIS</span>
           <h1>Construímos patrimônio com <span>precisão e alto padrão.</span></h1>
-          <p>Projetos residenciais, casas de alto padrão, venda de imóveis e estimativas de custos de obra em um só lugar.</p>
+          <p>Projetos residenciais, casas de alto padrão, gestão de obra e venda de imóveis em uma experiência clara e profissional.</p>
           <div class="hero-actions">
-            <a class="btn btn-primary" href="#calculadora">Simular custo da obra</a>
-            <a class="btn btn-ghost" href="#empreendimentos">Ver imóveis</a>
+            <a class="btn btn-primary" href="#empreendimentos">Ver imóveis</a>
+            <a class="btn btn-ghost" href="#servicos">Conhecer serviços</a>
           </div>
           <div class="hero-stats" aria-label="Diferenciais">
             <div><strong>360°</strong><span>Planejamento completo</span></div>
@@ -46,11 +44,11 @@
             <div><strong>Transparente</strong><span>Custos detalhados</span></div>
           </div>
         </div>
-        <aside class="hero-card" aria-label="Resumo de orçamento">
-          <span>Estimativa rápida</span>
-          <strong>Descubra quanto sua obra pode custar</strong>
-          <p>Área, padrão, mão de obra, cimento e custos extras — você ajusta os valores conforme sua realidade.</p>
-          <a href="#calculadora">Abrir calculadora <span>→</span></a>
+        <aside class="hero-card" aria-label="Atuação da Rodrigues Group">
+          <span>RODRIGUES GROUP</span>
+          <strong>Construção, gestão e imóveis de alto padrão</strong>
+          <p>Do planejamento à entrega, com foco em qualidade, organização da obra e valorização do patrimônio.</p>
+          <a href="#servicos">Conhecer nossos serviços <span>→</span></a>
         </aside>
       </div>
     </section>
@@ -87,118 +85,6 @@
       </div>
     </section>
 
-    <section class="section calculator-section" id="calculadora">
-      <div class="container">
-        <div class="section-head split-head calc-title">
-          <div>
-            <span class="eyebrow dark">SIMULADOR DE OBRA</span>
-            <h2>Calculadora de custos</h2>
-          </div>
-          <p>Ferramenta de estimativa inicial. O orçamento definitivo deve considerar projeto, local, especificações técnicas e preços reais dos fornecedores.</p>
-        </div>
-
-        <div class="calculator-layout">
-          <form class="calculator-card" id="costForm">
-            <div class="form-section-title">
-              <span>1</span>
-              <div><strong>Dados principais</strong><small>Defina área e padrão da construção.</small></div>
-            </div>
-
-            <div class="field-grid">
-              <label class="field">
-                <span>Área construída (m²)</span>
-                <input id="area" type="number" min="20" max="5000" step="1" value="200" required>
-              </label>
-              <label class="field">
-                <span>Padrão da obra</span>
-                <select id="standard">
-                  <option value="2200">Econômico — R$ 2.200/m²</option>
-                  <option value="3200" selected>Médio — R$ 3.200/m²</option>
-                  <option value="4800">Alto padrão — R$ 4.800/m²</option>
-                  <option value="7000">Luxo — R$ 7.000/m²</option>
-                </select>
-              </label>
-              <label class="field">
-                <span>Número de pavimentos</span>
-                <select id="floors">
-                  <option value="1" selected>1 pavimento</option>
-                  <option value="1.06">2 pavimentos (+6%)</option>
-                  <option value="1.1">3 pavimentos (+10%)</option>
-                </select>
-              </label>
-              <label class="field">
-                <span>Custos extras (%)</span>
-                <input id="extrasPercent" type="number" min="0" max="100" step="1" value="8">
-              </label>
-            </div>
-
-            <div class="form-section-title second">
-              <span>2</span>
-              <div><strong>Custos ajustáveis</strong><small>Edite de acordo com seus fornecedores e equipe.</small></div>
-            </div>
-
-            <div class="field-grid">
-              <label class="field">
-                <span>Mão de obra (R$/m²)</span>
-                <input id="laborPerM2" type="number" min="0" max="10000" step="10" value="950">
-              </label>
-              <label class="field">
-                <span>Preço do cimento (saco 50 kg)</span>
-                <input id="cementBagPrice" type="number" min="0" max="500" step="0.01" value="42.90">
-              </label>
-              <label class="field">
-                <span>Consumo estimado (sacos/m²)</span>
-                <input id="cementBagsPerM2" type="number" min="0" max="20" step="0.1" value="1.4">
-              </label>
-              <label class="field">
-                <span>Terreno / aquisição (R$)</span>
-                <input id="landCost" type="number" min="0" max="100000000" step="1000" value="0">
-              </label>
-            </div>
-
-            <label class="switch-row">
-              <input id="includeLand" type="checkbox" checked>
-              <span><strong>Incluir terreno no total geral</strong><small>Desmarque para calcular apenas a construção.</small></span>
-            </label>
-
-            <div class="calc-actions">
-              <button class="btn btn-primary" type="submit">Calcular estimativa</button>
-              <button class="btn btn-secondary" id="resetCalc" type="button">Restaurar exemplo</button>
-            </div>
-            <p class="form-note" id="formMessage" role="status" aria-live="polite"></p>
-          </form>
-
-          <aside class="result-card" aria-live="polite">
-            <span class="result-kicker">ESTIMATIVA DO PROJETO</span>
-            <div class="result-total" id="grandTotal">R$ 0,00</div>
-            <span class="result-caption">Valor total estimado</span>
-
-            <div class="result-breakdown">
-              <div><span>Construção base</span><strong id="baseCost">R$ 0,00</strong></div>
-              <div><span>Mão de obra</span><strong id="laborCost">R$ 0,00</strong></div>
-              <div><span>Cimento</span><strong id="cementCost">R$ 0,00</strong></div>
-              <div><span>Custos extras</span><strong id="extrasCost">R$ 0,00</strong></div>
-              <div><span>Terreno</span><strong id="landResult">R$ 0,00</strong></div>
-            </div>
-
-            <div class="cement-box">
-              <span>Previsão de cimento</span>
-              <strong id="cementBags">0 sacos</strong>
-              <small id="cementTons">aprox. 0,0 toneladas</small>
-            </div>
-
-            <div class="result-meter">
-              <div class="meter-top"><span>Custo estimado por m²</span><strong id="perM2">R$ 0,00</strong></div>
-              <div class="meter-track"><span id="meterBar"></span></div>
-            </div>
-
-            <p class="result-warning">Estimativa orientativa. Valores reais variam conforme projeto, região, fundação, estrutura, acabamentos e fornecedores.</p>
-            <a class="btn btn-light full" href="#contato">Pedir orçamento profissional</a>
-          </aside>
-        </div>
-      </div>
-    </section>
-
     <section class="section about-section" id="sobre">
       <div class="container about-grid">
         <div class="about-visual">
@@ -208,47 +94,17 @@
         <div class="about-copy">
           <span class="eyebrow dark">RODRIGUES GROUP CONSTRUCTION</span>
           <h2>Um site feito para transmitir segurança antes mesmo da primeira reunião.</h2>
-          <p>O conceito combina presença institucional, apresentação de imóveis e uma calculadora de orçamento que ajuda o cliente a ter uma primeira referência de investimento.</p>
+          <p>O conceito combina presença institucional, apresentação de imóveis e serviços de construção para transmitir segurança e profissionalismo desde o primeiro contato.</p>
           <div class="check-list">
             <span>✓ Catálogo de imóveis e casas de alto padrão</span>
-            <span>✓ Simulação de obra por metro quadrado</span>
-            <span>✓ Custos de mão de obra e cimento</span>
-            <span>✓ Estrutura preparada para receber WhatsApp e formulário real</span>
+            <span>✓ Construção residencial e projetos premium</span>
+            <span>✓ Gestão de etapas, materiais e equipes</span>
+            <span>✓ Controle administrativo interno de custos e orçamentos</span>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="contact-section" id="contato">
-      <div class="container contact-grid">
-        <div>
-          <span class="eyebrow">PRÓXIMO PASSO</span>
-          <h2>Vamos transformar o projeto em números reais?</h2>
-          <p>Preencha os dados abaixo. Nesta versão de demonstração, o formulário gera uma mensagem pronta para copiar e enviar ao atendimento.</p>
-        </div>
-        <form class="contact-card" id="contactForm">
-          <div class="field-grid">
-            <label class="field dark-field"><span>Nome</span><input id="clientName" type="text" placeholder="Seu nome" required></label>
-            <label class="field dark-field"><span>Telefone</span><input id="clientPhone" type="tel" placeholder="(84) 99999-9999" required></label>
-          </div>
-          <label class="field dark-field"><span>Interesse</span>
-            <select id="clientInterest">
-              <option>Construir uma casa</option>
-              <option>Comprar um imóvel</option>
-              <option>Orçamento de mão de obra</option>
-              <option>Consultoria / gestão de obra</option>
-            </select>
-          </label>
-          <label class="field dark-field"><span>Mensagem</span><textarea id="clientMessage" rows="4" placeholder="Conte um pouco sobre o projeto..."></textarea></label>
-          <button class="btn btn-primary full" type="submit">Gerar mensagem de contato</button>
-          <div class="generated-message" id="generatedMessage" hidden>
-            <strong>Mensagem pronta:</strong>
-            <p id="messageText"></p>
-            <button class="text-button" id="selectMessage" type="button">Selecionar texto</button>
-          </div>
-        </form>
-      </div>
-    </section>
   </main>
 
   <footer>
@@ -257,7 +113,7 @@
         <img src="assets/logo.png" alt="Rodrigues Group Construction" />
         <p>Construção, imóveis e soluções para transformar projetos em patrimônio.</p>
       </div>
-      <div><strong>Navegação</strong><a href="#empreendimentos">Imóveis</a><a href="#servicos">Serviços</a><a href="#calculadora">Calculadora</a></div>
+      <div><strong>Navegação</strong><a href="#empreendimentos">Imóveis</a><a href="#servicos">Serviços</a><a href="#sobre">Sobre</a></div>
       <div><strong>Contato</strong><span>Telefone: adicionar</span><span>E-mail: adicionar</span><span>Endereço: adicionar</span></div>
     </div>
     <div class="container footer-bottom"><span>© 2026 Rodrigues Group Construction</span><span>Catálogo conectado ao banco de dados</span></div>
