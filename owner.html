@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex,nofollow,noarchive" />
+  <title>Área do Proprietário | Rodrigues Group Construction</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="owner.css" />
+</head>
+<body>
+  <main class="owner-root">
+    <section class="login-shell" id="loginView">
+      <div class="login-brand">
+        <img src="assets/logo.png" alt="Rodrigues Group Construction" />
+        <div>
+          <span>ÁREA RESERVADA</span>
+          <strong>Rodrigues Group Construction</strong>
+        </div>
+      </div>
+      <div class="login-card">
+        <span class="eyebrow">ACESSO DOS PROPRIETÁRIOS</span>
+        <h1>Painel administrativo</h1>
+        <p>Cadastre imóveis, registre vendas e imprima comprovantes internos.</p>
+        <form id="loginForm">
+          <label>
+            <span>E-mail de acesso</span>
+            <input id="loginUser" type="email" autocomplete="username" placeholder="owner@empresa.com" required />
+          </label>
+          <label>
+            <span>Senha</span>
+            <input id="loginPassword" type="password" autocomplete="current-password" required />
+          </label>
+          <button type="submit" class="primary-btn">Entrar no painel</button>
+          <p class="form-message" id="loginMessage" role="status" aria-live="polite"></p>
+        </form>
+        <a class="back-site" href="index.html">← Voltar ao site público</a>
+      </div>
+      <p class="security-note">Acesso reservado. Esta rota não aparece no menu público.</p>
+    </section>
+
+    <section class="dashboard" id="dashboardView" hidden>
+      <aside class="sidebar">
+        <a class="side-brand" href="index.html" target="_blank" rel="noopener">
+          <img src="assets/logo.png" alt="Rodrigues Group Construction" />
+          <div><strong>Rodrigues Group</strong><span>Owner Center</span></div>
+        </a>
+        <nav id="ownerNav" aria-label="Menu do painel">
+          <button type="button" class="nav-item active" data-section="overview"><span>⌂</span> Visão geral</button>
+          <button type="button" class="nav-item" data-section="properties"><span>⌑</span> Imóveis</button>
+          <button type="button" class="nav-item" data-section="sales"><span>R$</span> Vendas</button>
+          <button type="button" class="nav-item" data-section="receipts"><span>▤</span> Comprovantes</button>
+          <button type="button" class="nav-item" data-section="security"><span>⚙</span> Segurança</button>
+        </nav>
+        <div class="side-footer">
+          <a href="index.html" target="_blank" rel="noopener">Abrir site público ↗</a>
+          <button id="logoutBtn" type="button">Sair da conta</button>
+        </div>
+      </aside>
+
+      <div class="dashboard-main">
+        <header class="topbar">
+          <button class="mobile-menu" id="mobileMenu" type="button" aria-label="Abrir menu">☰</button>
+          <div><span id="pageKicker">PAINEL</span><h1 id="pageTitle">Visão geral</h1></div>
+          <div class="owner-chip"><span></span><div><small>Conectado como</small><strong id="ownerName">owner</strong></div></div>
+        </header>
+
+        <div class="content-area">
+          <section class="panel-section active" data-panel="overview">
+            <div class="stats-grid">
+              <article><span>Imóveis cadastrados</span><strong id="statProperties">0</strong><small>portfólio total</small></article>
+              <article><span>Disponíveis</span><strong id="statAvailable">0</strong><small>prontos para venda</small></article>
+              <article><span>Vendas registradas</span><strong id="statSales">0</strong><small>histórico salvo</small></article>
+              <article class="orange-stat"><span>Valor vendido</span><strong id="statRevenue">R$ 0</strong><small>soma dos registros</small></article>
+            </div>
+
+            <div class="overview-grid">
+              <article class="panel-card">
+                <div class="card-head"><div><span>PORTFÓLIO</span><h2>Imóveis recentes</h2></div><button type="button" data-go="properties">Gerenciar</button></div>
+                <div id="recentProperties" class="mini-list"></div>
+              </article>
+              <article class="panel-card">
+                <div class="card-head"><div><span>VENDAS</span><h2>Últimos registros</h2></div><button type="button" data-go="sales">Nova venda</button></div>
+                <div id="recentSales" class="mini-list"></div>
+              </article>
+            </div>
+          </section>
+
+          <section class="panel-section" data-panel="properties">
+            <div class="section-toolbar">
+              <div><span>CATÁLOGO</span><h2>Cadastro de imóveis</h2><p>Adicione, edite, reserve ou marque casas como vendidas.</p></div>
+              <button class="primary-btn compact" type="button" id="newPropertyBtn">+ Novo imóvel</button>
+            </div>
+
+            <div class="editor-layout">
+              <form class="panel-card form-card" id="propertyForm">
+                <div class="form-title"><div><span id="propertyFormMode">NOVO IMÓVEL</span><h3>Informações da casa</h3></div><button type="button" class="text-btn" id="cancelPropertyEdit" hidden>Cancelar edição</button></div>
+                <input type="hidden" id="propertyId" />
+                <div class="form-grid">
+                  <label><span>Nome do imóvel *</span><input id="propertyTitle" type="text" placeholder="Ex.: Residência Mont Blanc" required /></label>
+                  <label><span>Categoria</span><select id="propertyCategory"><option>Alto padrão</option><option>Luxo</option><option>Premium</option><option>Residencial</option><option>Exclusivo</option></select></label>
+                  <label><span>Preço de venda (R$) *</span><input id="propertyPrice" type="number" min="0" step="1000" required /></label>
+                  <label><span>Área construída (m²) *</span><input id="propertyArea" type="number" min="1" step="1" required /></label>
+                  <label><span>Suítes</span><input id="propertySuites" type="number" min="0" max="50" value="3" /></label>
+                  <label><span>Vagas de garagem</span><input id="propertyGarages" type="number" min="0" max="50" value="2" /></label>
+                  <label class="wide"><span>Localização / condomínio</span><input id="propertyLocation" type="text" placeholder="Ex.: Condomínio / bairro / cidade" /></label>
+                  <label class="wide"><span>Diferenciais</span><input id="propertyFeatures" type="text" placeholder="Piscina, área gourmet, closet, energia solar" /></label>
+                  <label class="wide"><span>Descrição</span><textarea id="propertyDescription" rows="4" placeholder="Descreva os principais destaques do imóvel..."></textarea></label>
+                  <label><span>Status</span><select id="propertyStatus"><option value="available">Disponível</option><option value="reserved">Reservado</option><option value="sold">Vendido</option></select></label>
+                  <label><span>Foto da casa</span><input id="propertyImage" type="file" accept="image/jpeg,image/png,image/webp" /></label>
+                </div>
+                <div class="photo-preview" id="photoPreview"><span>Prévia da foto</span></div>
+                <div class="form-actions"><button class="primary-btn" type="submit">Salvar imóvel</button><button class="secondary-btn" id="clearPropertyBtn" type="button">Limpar</button></div>
+                <p class="form-message" id="propertyMessage" aria-live="polite"></p>
+              </form>
+
+              <div class="panel-card list-card">
+                <div class="list-head"><div><span>IMÓVEIS</span><h3>Portfólio cadastrado</h3></div><input id="propertySearch" type="search" placeholder="Buscar imóvel..." /></div>
+                <div id="propertyAdminList" class="property-admin-list"></div>
+              </div>
+            </div>
+          </section>
+
+          <section class="panel-section" data-panel="sales">
+            <div class="section-toolbar">
+              <div><span>COMERCIAL</span><h2>Registrar venda</h2><p>Salve os dados da negociação e gere um comprovante interno.</p></div>
+            </div>
+
+            <div class="sales-layout">
+              <form class="panel-card form-card" id="saleForm">
+                <div class="form-title"><div><span>NOVA VENDA</span><h3>Dados da negociação</h3></div></div>
+                <div class="form-grid">
+                  <label class="wide"><span>Imóvel</span><select id="saleProperty"><option value="">Venda sem imóvel cadastrado</option></select></label>
+                  <label><span>Comprador *</span><input id="buyerName" type="text" required /></label>
+                  <label><span>CPF / CNPJ</span><input id="buyerDocument" type="text" placeholder="Opcional" /></label>
+                  <label><span>Telefone</span><input id="buyerPhone" type="tel" /></label>
+                  <label><span>E-mail</span><input id="buyerEmail" type="email" /></label>
+                  <label><span>Data da venda *</span><input id="saleDate" type="date" required /></label>
+                  <label><span>Valor total (R$) *</span><input id="saleValue" type="number" min="0" step="1000" required /></label>
+                  <label><span>Entrada (R$)</span><input id="saleEntry" type="number" min="0" step="1000" value="0" /></label>
+                  <label><span>Forma de pagamento</span><select id="paymentMethod"><option>À vista</option><option>Financiamento</option><option>Entrada + parcelas</option><option>Permuta + valor</option><option>Outro</option></select></label>
+                  <label><span>Nº de parcelas</span><input id="installments" type="number" min="0" max="600" value="0" /></label>
+                  <label class="wide"><span>Observações</span><textarea id="saleNotes" rows="3" placeholder="Condições, sinal, vencimentos ou observações do negócio..."></textarea></label>
+                </div>
+                <label class="check-row"><input id="markSold" type="checkbox" checked /><span><strong>Marcar o imóvel como vendido</strong><small>Ao registrar a venda, o imóvel deixa de aparecer como disponível.</small></span></label>
+                <div class="form-actions"><button class="primary-btn" type="submit">Registrar venda</button><button class="secondary-btn" id="resetSaleBtn" type="button">Limpar</button></div>
+                <p class="form-message" id="saleMessage" aria-live="polite"></p>
+              </form>
+
+              <div class="panel-card list-card">
+                <div class="list-head"><div><span>HISTÓRICO</span><h3>Vendas salvas</h3></div><input id="saleSearch" type="search" placeholder="Buscar comprador..." /></div>
+                <div class="table-wrap">
+                  <table class="sales-table">
+                    <thead><tr><th>Nº</th><th>Comprador</th><th>Imóvel</th><th>Valor</th><th>Data</th><th></th></tr></thead>
+                    <tbody id="salesTableBody"></tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="panel-section" data-panel="receipts">
+            <div class="section-toolbar">
+              <div><span>DOCUMENTOS</span><h2>Comprovantes de venda</h2><p>Reimprima os comprovantes internos das vendas já registradas.</p></div>
+            </div>
+            <div id="receiptGrid" class="receipt-grid"></div>
+            <div class="legal-warning"><strong>Importante:</strong> este documento é um comprovante interno de registro da venda no sistema. Ele não substitui contrato, escritura, nota fiscal, recibo fiscal ou documento exigido por lei.</div>
+          </section>
+
+          <section class="panel-section" data-panel="security">
+            <div class="section-toolbar">
+              <div><span>ACESSO</span><h2>Segurança do painel</h2><p>Altere o usuário e a senha usados nesta versão do site.</p></div>
+            </div>
+            <div class="security-grid">
+              <form class="panel-card form-card" id="securityForm">
+                <div class="form-title"><div><span>CREDENCIAIS</span><h3>Segurança da conta</h3></div></div>
+                <label><span>E-mail da conta</span><input id="securityCurrentEmail" type="email" disabled /></label>
+                <label><span>Nome exibido no painel</span><input id="newDisplayName" type="text" minlength="2" required /></label>
+                <label><span>Nova senha</span><input id="newPassword" type="password" minlength="10" placeholder="Deixe vazio para não alterar" /></label>
+                <label><span>Confirmar nova senha</span><input id="confirmPassword" type="password" minlength="10" /></label>
+                <button class="primary-btn" type="submit">Atualizar segurança</button>
+                <p class="form-message" id="securityMessage" aria-live="polite"></p>
+              </form>
+              <article class="panel-card info-card">
+                <span>VERSÃO COM BANCO</span>
+                <h3>Supabase + autenticação real</h3>
+                <p>O painel usa Supabase Auth, banco PostgreSQL, Storage para fotos e políticas RLS. Mesmo conhecendo a rota owner.html, uma pessoa sem conta autorizada não consegue cadastrar imóveis nem acessar vendas.</p>
+                <ul><li>Login por e-mail e senha usando Supabase Auth.</li><li>Somente usuários cadastrados em owner_profiles recebem acesso administrativo.</li><li>Imóveis e vendas ficam salvos no banco e aparecem em qualquer dispositivo.</li><li>Fotos das casas ficam no Supabase Storage.</li></ul>
+              </article>
+            </div>
+          </section>
+        </div>
+      </div>
+      <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+    </section>
+  </main>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
+  <script src="db.js"></script>
+  <script src="owner.js"></script>
+</body>
+</html>

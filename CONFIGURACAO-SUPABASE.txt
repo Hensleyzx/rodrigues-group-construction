@@ -1,0 +1,29 @@
+CONFIGURAÇÃO RÁPIDA DO SUPABASE
+
+1) SQL Editor > New query
+Cole/execute: supabase-schema.sql
+
+2) Authentication > Users > Add user
+Crie o usuário do dono com e-mail e senha.
+
+3) Copie o UUID do usuário.
+Abra create-first-owner.sql e substitua:
+COLE_AQUI_O_UUID_DO_USUARIO
+pelo UUID real. Execute no SQL Editor.
+
+4) Project Settings / API
+Copie:
+- Project URL
+- Publishable key (ou anon public key)
+
+5) Abra supabase-config.js e deixe assim:
+window.RGC_SUPABASE_CONFIG = {
+  url: 'https://SEU-PROJETO.supabase.co',
+  key: 'SUA_CHAVE_PUBLICA'
+};
+
+6) Teste owner.html com o e-mail e senha criados.
+Cadastre uma casa. Ela deverá aparecer no index.html em outro navegador/dispositivo.
+
+Opcional:
+Execute supabase-demo-data.sql para criar 3 imóveis fictícios de teste.
