@@ -5,16 +5,23 @@ window.RGC_SUPABASE_CONFIG = {
 
 (() => {
   if (!/owner\.html$/i.test(window.location.pathname)) return;
-  const loadBudgetModule = () => {
-    if (document.getElementById('rgc-budget-admin-script')) return;
+
+  const loadScript = (id, src) => {
+    if (document.getElementById(id)) return;
     const script = document.createElement('script');
-    script.id = 'rgc-budget-admin-script';
-    script.src = 'budget-admin-v5.js?v=20260916-1';
+    script.id = id;
+    script.src = src;
     document.body.appendChild(script);
   };
+
+  const loadOwnerModules = () => {
+    loadScript('rgc-owner-enhancements-script', 'owner-enhancements.js?v=20260917-1');
+    loadScript('rgc-budget-admin-script', 'budget-admin-v5.js?v=20260916-1');
+  };
+
   if (document.readyState === 'complete') {
-    loadBudgetModule();
+    loadOwnerModules();
   } else {
-    window.addEventListener('load', loadBudgetModule, { once: true });
+    window.addEventListener('load', loadOwnerModules, { once: true });
   }
 })();
