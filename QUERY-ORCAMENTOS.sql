@@ -1,6 +1,6 @@
 -- RODRIGUES GROUP CONSTRUCTION
 -- Calculadora administrativa + orçamentos
--- Versão com matéria-prima e custos "Outros".
+-- Versão com mão de obra por diária x dias, matéria-prima e custos "Outros".
 -- Pode ser executado mais de uma vez com segurança.
 
 create extension if not exists pgcrypto;
@@ -46,7 +46,13 @@ create table if not exists public.quotes (
   floors_factor numeric(6,3) not null default 1 check (floors_factor > 0),
 
   extras_percent numeric(8,2) not null default 0 check (extras_percent >= 0),
+
+  -- Mão de obra: diária da equipe x dias previstos.
+  labor_daily_rate numeric(14,2) not null default 0 check (labor_daily_rate >= 0),
+  labor_days integer not null default 0 check (labor_days >= 0),
+  -- Mantido para compatibilidade com orçamentos antigos; o site grava o valor derivado.
   labor_per_m2 numeric(14,2) not null default 0 check (labor_per_m2 >= 0),
+
   cement_bag_price numeric(14,2) not null default 0 check (cement_bag_price >= 0),
   cement_bags_per_m2 numeric(10,3) not null default 0 check (cement_bags_per_m2 >= 0),
   land_cost numeric(14,2) not null default 0 check (land_cost >= 0),
@@ -60,11 +66,11 @@ create table if not exists public.quotes (
   steel_cost numeric(14,2) not null default 0 check (steel_cost >= 0),
 
   -- Matéria-prima
-  crushed_stone_cost numeric(14,2) not null default 0 check (crushed_stone_cost >= 0), -- Brita
-  bricks_cost numeric(14,2) not null default 0 check (bricks_cost >= 0),                -- Tijolos
-  sand_cost numeric(14,2) not null default 0 check (sand_cost >= 0),                    -- Areia
-  stone_cost numeric(14,2) not null default 0 check (stone_cost >= 0),                  -- Pedras
-  gravel_cost numeric(14,2) not null default 0 check (gravel_cost >= 0),                -- Cascalhos
+  crushed_stone_cost numeric(14,2) not null default 0 check (crushed_stone_cost >= 0),
+  bricks_cost numeric(14,2) not null default 0 check (bricks_cost >= 0),
+  sand_cost numeric(14,2) not null default 0 check (sand_cost >= 0),
+  stone_cost numeric(14,2) not null default 0 check (stone_cost >= 0),
+  gravel_cost numeric(14,2) not null default 0 check (gravel_cost >= 0),
 
   -- Itens livres adicionados pelo owner, por exemplo:
   -- [{"description":"Madeira","value":4500},{"description":"Frete","value":1200}]
@@ -92,8 +98,11 @@ create table if not exists public.quotes (
   updated_at timestamptz not null default now()
 );
 
--- Atualizações para bancos que já tinham a tabela quotes.
+-- Atualiza bancos que já tinham a tabela quotes.
 alter table public.quotes
+  add column if not exists labor_daily_rate numeric(14,2) not null default 0,
+  add column if not exists labor_days integer not null default 0,
+  add column if not exists labor_per_m2 numeric(14,2) not null default 0,
   add column if not exists electrical_cost numeric(14,2) not null default 0,
   add column if not exists hydraulic_cost numeric(14,2) not null default 0,
   add column if not exists finishing_cost numeric(14,2) not null default 0,
@@ -154,7 +163,7 @@ before update on public.quotes
 for each row
 execute function public.touch_updated_at();
 
--- Conferência rápida dos novos campos.
+-- Conferência rápida:
 -- select column_name
 -- from information_schema.columns
 -- where table_schema = 'public'
