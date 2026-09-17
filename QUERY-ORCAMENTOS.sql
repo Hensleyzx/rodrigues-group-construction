@@ -1,5 +1,6 @@
 -- RODRIGUES GROUP CONSTRUCTION
 -- Calculadora administrativa + orçamentos
+-- Versão com matéria-prima e custos "Outros".
 -- Pode ser executado mais de uma vez com segurança.
 
 create extension if not exists pgcrypto;
@@ -58,6 +59,19 @@ create table if not exists public.quotes (
   flooring_cost numeric(14,2) not null default 0 check (flooring_cost >= 0),
   steel_cost numeric(14,2) not null default 0 check (steel_cost >= 0),
 
+  -- Matéria-prima
+  crushed_stone_cost numeric(14,2) not null default 0 check (crushed_stone_cost >= 0), -- Brita
+  bricks_cost numeric(14,2) not null default 0 check (bricks_cost >= 0),                -- Tijolos
+  sand_cost numeric(14,2) not null default 0 check (sand_cost >= 0),                    -- Areia
+  stone_cost numeric(14,2) not null default 0 check (stone_cost >= 0),                  -- Pedras
+  gravel_cost numeric(14,2) not null default 0 check (gravel_cost >= 0),                -- Cascalhos
+
+  -- Itens livres adicionados pelo owner, por exemplo:
+  -- [{"description":"Madeira","value":4500},{"description":"Frete","value":1200}]
+  other_costs jsonb not null default '[]'::jsonb,
+  other_cost_total numeric(14,2) not null default 0 check (other_cost_total >= 0),
+  raw_materials_total numeric(14,2) not null default 0 check (raw_materials_total >= 0),
+
   base_cost numeric(14,2) not null default 0 check (base_cost >= 0),
   labor_cost numeric(14,2) not null default 0 check (labor_cost >= 0),
   cement_cost numeric(14,2) not null default 0 check (cement_cost >= 0),
@@ -78,14 +92,22 @@ create table if not exists public.quotes (
   updated_at timestamptz not null default now()
 );
 
--- Se a tabela já existia em uma versão anterior, adiciona os novos custos.
+-- Atualizações para bancos que já tinham a tabela quotes.
 alter table public.quotes
   add column if not exists electrical_cost numeric(14,2) not null default 0,
   add column if not exists hydraulic_cost numeric(14,2) not null default 0,
   add column if not exists finishing_cost numeric(14,2) not null default 0,
   add column if not exists marble_cost numeric(14,2) not null default 0,
   add column if not exists flooring_cost numeric(14,2) not null default 0,
-  add column if not exists steel_cost numeric(14,2) not null default 0;
+  add column if not exists steel_cost numeric(14,2) not null default 0,
+  add column if not exists crushed_stone_cost numeric(14,2) not null default 0,
+  add column if not exists bricks_cost numeric(14,2) not null default 0,
+  add column if not exists sand_cost numeric(14,2) not null default 0,
+  add column if not exists stone_cost numeric(14,2) not null default 0,
+  add column if not exists gravel_cost numeric(14,2) not null default 0,
+  add column if not exists other_costs jsonb not null default '[]'::jsonb,
+  add column if not exists other_cost_total numeric(14,2) not null default 0,
+  add column if not exists raw_materials_total numeric(14,2) not null default 0;
 
 create index if not exists quotes_created_at_idx
 on public.quotes(created_at desc);
@@ -131,3 +153,10 @@ create trigger trg_quotes_updated_at
 before update on public.quotes
 for each row
 execute function public.touch_updated_at();
+
+-- Conferência rápida dos novos campos.
+-- select column_name
+-- from information_schema.columns
+-- where table_schema = 'public'
+--   and table_name = 'quotes'
+-- order by ordinal_position;
