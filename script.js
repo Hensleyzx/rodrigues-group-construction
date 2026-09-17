@@ -86,5 +86,14 @@
     });
   }
 
+  // Atalho oculto para abrir o painel administrativo a partir do site público.
+  window.addEventListener('keydown', (event) => {
+    if (event.ctrlKey && event.shiftKey && event.code === 'KeyO') {
+      event.preventDefault();
+      event.stopPropagation();
+      window.location.href = 'owner.html';
+    }
+  }, { capture: true });
+
   renderProperties();
 })();
