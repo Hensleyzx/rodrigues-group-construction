@@ -9,7 +9,7 @@ window.RGC_SUPABASE_CONFIG = {
     if (document.getElementById('rgc-budget-admin-script')) return;
     const script = document.createElement('script');
     script.id = 'rgc-budget-admin-script';
-    script.src = 'budget-admin-v4.js?v=20260916-1';
+    script.src = 'budget-admin-v5.js?v=20260916-1';
     document.body.appendChild(script);
   };
   if (document.readyState === 'complete') {
