@@ -9,12 +9,12 @@ window.RGC_SUPABASE_CONFIG = {
     if (document.getElementById('rgc-budget-admin-script')) return;
     const script = document.createElement('script');
     script.id = 'rgc-budget-admin-script';
-    script.src = 'budget-admin.js?v=20260916-1';
+    script.src = 'budget-admin.js?v=20260916-2';
     document.body.appendChild(script);
   };
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', loadBudgetModule, { once: true });
-  } else {
+  if (document.readyState === 'complete') {
     loadBudgetModule();
+  } else {
+    window.addEventListener('load', loadBudgetModule, { once: true });
   }
 })();
